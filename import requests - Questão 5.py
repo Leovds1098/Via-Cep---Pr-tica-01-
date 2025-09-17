@@ -13,12 +13,7 @@ r = requests.get(
 if r.status_code == 200:
     print("\nRequisição realizada com sucesso!")
 
-    # 🔹 Defina o caminho completo do arquivo (altere conforme seu sistema)
-    # Exemplo para Windows:
     caminho = r"C:/Users/Leonardo/documents\resultado_questão 5.pdf"
-    # Exemplo para Linux/macOS:
-    # caminho = "/home/seu_usuario/resultado_google.pdf"
-
     # Garante que a pasta existe
     os.makedirs(os.path.dirname(caminho), exist_ok=True)
 

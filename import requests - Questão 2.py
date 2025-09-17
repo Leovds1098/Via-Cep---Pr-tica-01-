@@ -1,26 +1,15 @@
 import requests
 
-url = "https://viacep.com.br/ws/"
-uf = "MG"
-cidade = "Belo Horizonte"
-logradouro = "Rua dos Aimores"
-formato = "/json/"
+url = 'https://viacep.com.br/ws/'
+cep_inicial = 30140071
+formato = '/xml/'
 
-# Monta a URL para consulta por endereço
-consulta = f"{url}{uf}/{cidade}/{logradouro}{formato}"
+for i in range(5):  # gera 5 CEPs sequenciais
+    cep = str(cep_inicial + i)
+    r = requests.get(url + cep + formato)
 
-r = requests.get(consulta)
-
-if r.status_code == 200:
-    enderecos = r.json()
-    print(f"\nForam encontrados {len(enderecos)} resultados:\n")
-    for i, endereco in enumerate(enderecos, start=1):
-        print(f"Resultado {i}:")
-        print(f"  CEP: {endereco.get('cep')}")
-        print(f"  Logradouro: {endereco.get('logradouro')}")
-        print(f"  Bairro: {endereco.get('bairro')}")
-        print(f"  Cidade: {endereco.get('localidade')}")
-        print(f"  UF: {endereco.get('uf')}")
-        print()
-else:
-    print("Nao houve sucesso na requisicao.")
+    if r.status_code == 200:
+        print(f'\nResultado para o CEP {cep}:')
+        print(r.text)  # mostra o XML retornado
+    else:
+        print(f'\nNao houve sucesso na requisicao para o CEP {cep}.')
